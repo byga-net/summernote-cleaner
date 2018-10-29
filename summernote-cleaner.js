@@ -28,7 +28,7 @@
       keepHtml: true, //Remove all Html formats
       keepOnlyTags: [], // If keepHtml is true, remove all tags except these
       keepClasses: false, //Remove Classes
-      badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], //Remove full tags with contents
+      badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript'], //Remove full tags with contents
       badAttributes: ['style', 'start'], //Remove attributes from remaining tags
       limitChars: 520, // 0|# 0 disables option
       limitDisplay: 'both', // none|text|html|both
@@ -158,18 +158,18 @@
                 msie = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
             var ffox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
             if (msie)
-              var text = window.clipboardData.getData("Text");
+              var text = window.clipboardData.getData('text/html');
             else
-              var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'Text' : 'text/plain');
+              var text = e.originalEvent.clipboardData.getData(options.cleaner.keepHtml ? 'text/html' : 'text/plain');
             if (text) {
               if (msie || ffox)
-                setTimeout($note.summernote('pasteHTML', cleanText(text, options.cleaner.newline)), 1);
+                setTimeout(function(){$note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));}, 1);
               else
                 $note.summernote('pasteHTML', cleanText(text, options.cleaner.newline));
-              if ($editor.find('.note-status-output').length > 0)
-                $editor.find('.note-status-output').html('<div class="summernote-cleanerAlert alert alert-success">' + lang.cleaner.not + '</div>');
-              else
-                $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="' + options.cleaner.notStyle + '">' + lang.cleaner.not + '</div>');
+              // if ($editor.find('.note-status-output').length > 0)
+              //   $editor.find('.note-status-output').html('<div class="summernote-cleanerAlert alert alert-success">' + lang.cleaner.not + '</div>');
+              // else
+              //   $editor.find('.note-resizebar').append('<div class="summernote-cleanerAlert alert alert-success" style="' + options.cleaner.notStyle + '">' + lang.cleaner.not + '</div>');
             }
           }
         }
